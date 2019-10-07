@@ -1,0 +1,12 @@
+version: '3'
+services:
+
+  admin:
+    build: ./adminservice
+    ports:
+      - "8090:8090"
+
+  config:
+    build: ./configservice
+    ports:
+      - "8080:8080"
