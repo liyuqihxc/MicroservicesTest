@@ -1,4 +1,5 @@
 #!/bin/bash
+
 set -x
 set -e
 
@@ -7,22 +8,27 @@ show_help() {
   echo "下载指定仓库的代码到本地并运行部署脚本。"
   echo "Maintainer: liyuqihxc https://github.com/liyuqihxc"
   echo "Usage:"
-  echo "  docker run liyuqihxc/apollo [options]"
+  echo "  docker run liyuqihxc/apollo {{{ -p | --start-portal } ENV_SETTING } |"
+  echo "       {{-e | --start-env} ENV --ENV-env ENV_SETTING } |"
+  echo "       {-v | --version} | {-h | --help}}"
   echo ""
   echo "Options:"
   echo "  -h, --help          显示帮助信息并退出"
-  echo "  -b, --branch-name   分支名。可选，默认为master"
-  echo "  -u, --url           仓库Url"
-  echo "  -t, --target-dir    目标路径"
-  echo "  -s, --sub-script    部署脚本路径"
+  echo "  -v, --version       显示版本信息并退出"
+  echo "  -p, --start-portal  启动Portal"
+  echo "  -e, --start-env     启动"
+  echo "      --dev-env       开发环境参数"
+  echo "      --fat-env       单元测试环境参数"
+  echo "      --uat-env       回归测试环境参数"
+  echo "      --pro-env       生产环境参数"
   echo ""
   echo "Example:"
   echo "  docker run -it liyuqihxc/apollo -h"
   echo ""
-  exit 1
+  exit 0
 }
 
-ARGS=`getopt -a -o b:u:t:s:h -l branch-name:,url:,target-dir:,sub-script:,help -- "$@"`
+ARGS=`getopt -a -n "apollo" -o b:u:t:s:h -l branch-name:,url:,target-dir:,sub-script:,help -- "$@"`
 [ $? -ne 0 ] && show_help
 eval set -- "${ARGS}"
 while true
