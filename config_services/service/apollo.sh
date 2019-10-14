@@ -1,7 +1,4 @@
-#!/bin/bash
-
-set -x
-set -e
+#!/bin/sh
 
 show_help() {
   echo ""
@@ -23,7 +20,7 @@ show_help() {
   echo "      --pro-env       生产环境参数"
   echo ""
   echo "Example:"
-  echo "  docker run -it liyuqihxc/apollo -h"
+  echo "  docker run liyuqihxc/apollo -h"
   echo ""
   exit 0
 }
