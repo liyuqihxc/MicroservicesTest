@@ -58,6 +58,7 @@ RUN wget -O- "${APOLLO_URL}" | tar -zx && \
 
 FROM openjdk:8-jre-alpine
 
+ARG VERSION
 ARG PORTAL_PORT
 ARG DEV_ADMIN_PORT
 ARG FAT_ADMIN_PORT
@@ -75,7 +76,7 @@ WORKDIR /apollo
 COPY healthcheck.sh ./
 COPY apollo.sh ./
 
-RUN echo 123 && \
+RUN sed -e "/%%APOLLO_VERSION%%/${VERSION}/" && \
     chmod +x healthcheck.sh apollo.sh
 
 # HEALTHCHECK --interval=5m --timeout=3s CMD bash ./healthcheck

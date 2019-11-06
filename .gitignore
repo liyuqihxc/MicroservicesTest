@@ -54,3 +54,10 @@ build/
 
 ### VS Code ###
 .vscode/
+
+## dotnet ###
+obj/
+bin/
+
+## visual studio ##
+.vs/

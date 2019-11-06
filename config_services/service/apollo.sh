@@ -2,7 +2,7 @@
 
 show_help() {
   echo ""
-  echo "下载指定仓库的代码到本地并运行部署脚本。"
+  echo "配置并启动Apollo服务。"
   echo "Maintainer: liyuqihxc https://github.com/liyuqihxc"
   echo "Usage:"
   echo "  docker run liyuqihxc/apollo {{{ -p | --start-portal } ENV_SETTING } |"
@@ -25,34 +25,36 @@ show_help() {
   exit 0
 }
 
-ARGS=`getopt -a -n "apollo" -o b:u:t:s:h -l branch-name:,url:,target-dir:,sub-script:,help -- "$@"`
+ARGS=`getopt -a -n "apollo" -o e:p:vh -l dev-env:,fat-env:,uat-env:,pro-env:,start-env:,start-portal:,version:,help -- "$@"`
 [ $? -ne 0 ] && show_help
 eval set -- "${ARGS}"
 while true
 do
   case "$1" in
-    -b|--branch-name)
-      BRANCH_NAME="$2"
-      echo "b=$BRANCH_NAME"
-      shift
-      ;;
-    -u|--url)
-      URL="$2"
-      echo "u=$URL"
-      shift
-      ;;
-    -t|--target-dir)
-      TARGET_DIR="$2"
-      echo "t=$TARGET_DIR"
-      shift
-      ;;
-    -s|--sub-script)
-      SUB_SCRIPT="$2"
-      echo "s=$SUB_SCRIPT"
-      shift
-      ;;
     -h|--help)
       show_help
+      ;;
+    -v|--version)
+      echo "v%%APOLLO_VERSION%%"
+      exit 0
+      ;;
+    -p|--start-portal)
+      shift
+      ;;
+    -e|--start-env)
+      shift
+      ;;
+    --dev-env)
+      shift
+      ;;
+    --fat-env)
+      shift
+      ;;
+    --uat-env)
+      shift
+      ;;
+    --pro-env)
+      shift
       ;;
     --)
       shift
