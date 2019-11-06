@@ -1,6 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>com.liyuqihxc</groupId>
+  <groupId>com.liyuqihxc.iwm</groupId>
   <artifactId>java-services</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
@@ -32,6 +32,11 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
+      <dependency>
+      	<groupId>org.apache.commons</groupId>
+      	<artifactId>commons-lang3</artifactId>
+      	<version>3.8.1</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
   <build>
@@ -44,5 +49,6 @@
   </build>
   <modules>
   	<module>eureka-server</module>
+  	<module>zuul-server</module>
   </modules>
 </project>
