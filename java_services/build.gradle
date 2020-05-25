@@ -1,14 +1,17 @@
 //https://reflectoring.io/spring-boot-gradle-multi-module/
 plugins {
-    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
-    id 'org.springframework.boot' version '2.3.0.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+    id 'org.springframework.boot' version '2.2.2.RELEASE'
 }
 
 allprojects {
+    apply plugin: 'idea'
+
     group 'top.liyuqihxc'
-    version '1.0-SNAPSHOT'
+    version '0.1.0-SNAPSHOT'
 
     repositories {
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
         mavenCentral()
     }
 }
@@ -20,6 +23,7 @@ subprojects {
 
     ext {
         set('springCloudVersion', "Hoxton.SR4")
+        set('springBootVersion', "2.2.7.RELEASE")
     }
 
     compileJava {
@@ -28,6 +32,7 @@ subprojects {
     }
 
     dependencies {
+        implementation 'org.springframework.boot:spring-boot-starter-web'
         testImplementation('org.springframework.boot:spring-boot-starter-test') {
             exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
         }
