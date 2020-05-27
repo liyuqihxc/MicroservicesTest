@@ -5,29 +5,28 @@ show_help() {
   echo "配置并启动Apollo服务。"
   echo "Maintainer: liyuqihxc https://github.com/liyuqihxc"
   echo "Usage:"
-  echo "  docker run liyuqihxc/apollo {{{ -p | --start-portal } ENV_SETTING } |"
-  echo "       {{-e | --start-env} ENV --ENV-env ENV_SETTING } |"
-  echo "       {-v | --version} | {-h | --help}}"
+  echo "  docker run liyuqihxc/apollo { {{-p | --start-portal} env_file} |"
+  echo "       {{-c | --start-config} env_file} |"
+  echo "       {{-a | --start-admin} env_file} |"
+  echo "       {-v | --version} | {-h | --help} }"
   echo ""
   echo "Options:"
   echo "  -h, --help          显示帮助信息并退出"
   echo "  -v, --version       显示版本信息并退出"
-  echo "  -p, --start-portal  启动Portal"
-  echo "  -e, --start-env     启动"
-  echo "      --dev-env       开发环境参数"
-  echo "      --fat-env       单元测试环境参数"
-  echo "      --uat-env       回归测试环境参数"
-  echo "      --pro-env       生产环境参数"
+  echo "  -p, --start-portal  启动Portal Service"
+  echo "  -c, --start-config  启动Config Service"
+  echo "  -a, --start-admin   启动Admin Service"
   echo ""
   echo "Example:"
-  echo "  docker run liyuqihxc/apollo -h"
+  echo "  docker run liyuqihxc/apollo -p .portal_env"
   echo ""
   exit 0
 }
 
-ARGS=`getopt -a -n "apollo" -o e:p:vh -l dev-env:,fat-env:,uat-env:,pro-env:,start-env:,start-portal:,version:,help -- "$@"`
+ARGS=`getopt -a -n "apollo" -o p:c:a:vh -l start-portal:,start-config:,start-admin:,version,help -- "$@"`
 [ $? -ne 0 ] && show_help
 eval set -- "${ARGS}"
+unset ARGS
 while true
 do
   case "$1" in
@@ -39,21 +38,18 @@ do
       exit 0
       ;;
     -p|--start-portal)
+      START_TYPE="Portal"
+      ENV_FILE="$2"
       shift
       ;;
-    -e|--start-env)
+    -c|--start-config)
+      START_TYPE="Config"
+      ENV_FILE="$2"
       shift
       ;;
-    --dev-env)
-      shift
-      ;;
-    --fat-env)
-      shift
-      ;;
-    --uat-env)
-      shift
-      ;;
-    --pro-env)
+    -a|--start-admin)
+      START_TYPE="Admin"
+      ENV_FILE="$2"
       shift
       ;;
     --)
@@ -64,3 +60,20 @@ do
 
   shift
 done
+
+if [ ! -f "$ENV_FILE" ]
+then
+  export $(cat "$ENV_FILE" | xargs)
+fi
+
+case $START_TYPE in
+  "Portal")
+    sh apollo-portal/scripts/startup.sh
+    ;;
+  "Config")
+    sh apollo-config/scripts/startup.sh
+    ;;
+  "Admin")
+    sh apollo-admin/scripts/startup.sh
+    ;;
+esac

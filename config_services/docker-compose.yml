@@ -1,0 +1,11 @@
+version: "3"
+services:
+ mysql-dev:
+  image: mysql
+  # restart: always
+  environment:
+   - MYSQL_ROOT_PASSWORD=123456
+  expose:
+   - "3306"
+  volumes:
+    - /Users/yjwfn/bin/apollo/scripts/sql:/sql  
