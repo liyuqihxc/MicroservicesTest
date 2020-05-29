@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 show_help() {
   echo ""
@@ -68,12 +68,12 @@ fi
 
 case $START_TYPE in
   "Portal")
-    sh apollo-portal/scripts/startup.sh
+    bash apollo-portal/scripts/startup.sh
     ;;
   "Config")
-    sh apollo-config/scripts/startup.sh
+    bash apollo-config/scripts/startup.sh
     ;;
   "Admin")
-    sh apollo-admin/scripts/startup.sh
+    bash apollo-admin/scripts/startup.sh
     ;;
 esac

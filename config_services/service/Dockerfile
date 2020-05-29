@@ -42,13 +42,14 @@ WORKDIR /apollo
 COPY healthcheck.sh ./
 COPY apollo.sh ./
 
-RUN sed -e "/%%APOLLO_VERSION%%/${VERSION}/" && \
+RUN sed -e "s/%%APOLLO_VERSION%%/${VERSION}/g" -i apollo.sh && \
     chmod +x healthcheck.sh apollo.sh
 
 HEALTHCHECK --interval=5m --timeout=3s CMD bash ./healthcheck.sh
+
 
 EXPOSE ${PORTAL_PORT} \
     ${ADMIN_PORT} \
     ${CONFIG_PORT}
 
-ENTRYPOINT [ "sh", "./apollo.sh" ]
+ENTRYPOINT [ "bash", "./apollo.sh" ]
